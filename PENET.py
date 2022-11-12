@@ -176,7 +176,6 @@ class PrototypeEmbeddingNetwork(nn.Module):
 
         entity_dists = entity_dists.split(num_objs, dim=0)
         rel_dists = rel_dists.split(num_rels, dim=0)
-        #################
 
         if self.training:
 
@@ -218,7 +217,6 @@ class PrototypeEmbeddingNetwork(nn.Module):
 
 
     def refine_obj_labels(self, roi_features, proposals):
-
         use_gt_label = self.training or self.cfg.MODEL.ROI_RELATION_HEAD.USE_GT_OBJECT_LABEL
         obj_labels = cat([proposal.get_field("labels") for proposal in proposals], dim=0) if use_gt_label else None
         pos_embed = self.pos_embed(encode_box_info(proposals))
@@ -236,7 +234,6 @@ class PrototypeEmbeddingNetwork(nn.Module):
         pos_embed = self.pos_embed(encode_box_info(proposals))
         num_objs = [len(p) for p in proposals]
         obj_pre_rep_for_pred = self.lin_obj_cyx(cat([roi_features, obj_embed, pos_embed], -1))
-
 
         if self.mode == 'predcls':
             obj_labels = obj_labels.long()
@@ -274,3 +271,20 @@ class PrototypeEmbeddingNetwork(nn.Module):
         obj_preds = torch.cat(obj_preds, dim=0)
         return obj_preds
 
+    
+class MLP(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim, num_layers):
+        super().__init__()
+        self.num_layers = num_layers
+        h = [hidden_dim] * (num_layers - 1)
+        self.layers = nn.ModuleList(
+            nn.Linear(n, k) for n, k in zip([input_dim] + h, h + [output_dim]))
+
+    def forward(self, x):
+        for i, layer in enumerate(self.layers):
+            x = F.relu(layer(x)) if i < self.num_layers - 1 else layer(x)  
+        return x
+    
+    
+ def fusion_func(x, y):
+    return F.relu(x + y) - (x - y) ** 2
