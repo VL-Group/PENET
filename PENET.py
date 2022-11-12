@@ -46,26 +46,6 @@ class PrototypeEmbeddingNetwork(nn.Module):
         self.W_sub = MLP(self.embed_dim, self.mlp_dim // 2, self.mlp_dim, 2)
         self.W_obj = MLP(self.embed_dim, self.mlp_dim // 2, self.mlp_dim, 2)
         self.W_pred = MLP(self.embed_dim, self.mlp_dim // 2, self.mlp_dim, 2)
-        self.project_head = MLP(self.mlp_dim, self.mlp_dim, self.mlp_dim*2, 2)
-
-        self.linear_sub = nn.Linear(self.mlp_dim, self.mlp_dim)
-        self.linear_obj = nn.Linear(self.mlp_dim, self.mlp_dim)
-        self.linear_pred = nn.Linear(self.mlp_dim, self.mlp_dim)
-        self.linear_rel_rep = nn.Linear(self.mlp_dim, self.mlp_dim)
-        
-        self.norm_sub = nn.LayerNorm(self.mlp_dim)
-        self.norm_obj = nn.LayerNorm(self.mlp_dim)
-        self.dropout_sub = nn.Dropout(dropout_p)
-        self.dropout_obj = nn.Dropout(dropout_p)
-        self.norm_rel_labels = nn.LayerNorm(self.mlp_dim)
-        self.norm_union = nn.LayerNorm(self.mlp_dim)
-        self.norm_rel_rep = nn.LayerNorm(self.mlp_dim)
-        self.dropout_rel_rep = nn.Dropout(dropout_p)
-
-        self.dropout_rel = nn.Dropout(dropout_p)
-        self.dropout_pred = nn.Dropout(dropout_p)
-       
-        self.down_samp = MLP(self.pooling_dim, self.mlp_dim, self.mlp_dim, 2) 
 
         self.gate_sub = nn.Linear(self.mlp_dim*2, self.mlp_dim)  
         self.gate_obj = nn.Linear(self.mlp_dim*2, self.mlp_dim)
@@ -75,6 +55,27 @@ class PrototypeEmbeddingNetwork(nn.Module):
             nn.Linear(self.mlp_dim, self.mlp_dim*2), nn.ReLU(True),
             nn.Dropout(dropout_p), nn.Linear(self.mlp_dim*2, self.mlp_dim)
         ])
+
+        self.project_head = MLP(self.mlp_dim, self.mlp_dim, self.mlp_dim*2, 2)
+
+        self.linear_sub = nn.Linear(self.mlp_dim, self.mlp_dim)
+        self.linear_obj = nn.Linear(self.mlp_dim, self.mlp_dim)
+        self.linear_pred = nn.Linear(self.mlp_dim, self.mlp_dim)
+        self.linear_rel_rep = nn.Linear(self.mlp_dim, self.mlp_dim)
+        
+        self.norm_sub = nn.LayerNorm(self.mlp_dim)
+        self.norm_obj = nn.LayerNorm(self.mlp_dim)
+        self.norm_rel_rep = nn.LayerNorm(self.mlp_dim)
+
+        self.dropout_sub = nn.Dropout(dropout_p)
+        self.dropout_obj = nn.Dropout(dropout_p)
+        self.dropout_rel_rep = nn.Dropout(dropout_p)
+        
+        self.dropout_rel = nn.Dropout(dropout_p)
+        self.dropout_pred = nn.Dropout(dropout_p)
+       
+        self.down_samp = MLP(self.pooling_dim, self.mlp_dim, self.mlp_dim, 2) 
+
         self.logit_scale = nn.Parameter(torch.ones([]) * np.log(1 / 0.07))
 
         ##### refine object labels
