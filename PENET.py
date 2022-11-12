@@ -286,5 +286,5 @@ class MLP(nn.Module):
         return x
     
     
- def fusion_func(x, y):
+def fusion_func(x, y):
     return F.relu(x + y) - (x - y) ** 2
