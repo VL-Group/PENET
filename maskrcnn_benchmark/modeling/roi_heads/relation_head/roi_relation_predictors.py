@@ -125,6 +125,8 @@ class PrototypeEmbeddingNetwork(nn.Module):
                 self.mode = 'sgcls'
         else:
             self.mode = 'sgdet'
+        
+        self.nms_thresh = self.cfg.TEST.RELATION.LATER_NMS_PREDICTION_THRES
 
 
     def forward(self, proposals, rel_pair_idxs, rel_labels, rel_binarys, roi_features, union_features, logger=None):
