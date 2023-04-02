@@ -72,6 +72,18 @@ python3 \
 
 All our experiments are conducted on one NVIDIA GeForce RTX 3090, if you wanna run it on your own device, make sure to follow distributed training instructions in [Scene-Graph-Benchmark.pytorch](https://github.com/KaihuaTang/Scene-Graph-Benchmark.pytorch).
 
+
+
+## The Trained Model Weights
+
+We provide the weights for the  model. Due to random seeds and machines, they are not completely consistent with those reported in the paper, but they are within the allowable error range.
+
+|      Model       | R@20  | R@50  | R@100 | mR@20 | mR@50 | mR@100 |                         Google Drive                         |
+| :--------------: | :---: | :---: | :---: | :---: | :---: | :----: | :----------------------------------------------------------: |
+| PE-Net (PredCls) | 58.21 | 65.23 | 67.34 | 25.83 | 31.42 | 33.48  | [Model Link](https://drive.google.com/file/d/1rjsLs3N33iiOB5xYO7zetNhR7ebi385W/view?usp=share_link) \| [Log Link](https://drive.google.com/file/d/1YK0dLWVkmfWQjpreBdeWi4H0XyV61XMl/view?usp=share_link) |
+|  PE-Net (SGCls)  | 35.28 | 39.13 | 40.19 | 15.23 | 18.22 | 19.34  | [Model Link](https://drive.google.com/file/d/1uRl-O-yXmpCs__l_V-WTdYtbWPl57M1B/view?usp=share_link) \| [Log Link](https://drive.google.com/file/d/13mjhmEEvQtwHeinrrbgIJFgDQSuryvCL/view?usp=share_link) |
+|  PE-Net (SGDet)  | 23.36 | 30.41 | 34.84 | 9.16  | 12.25 | 14.34  | [Model Link](https://drive.google.com/file/d/1Ed6PkATiig0xpFuQYL-G5trFifhPpc0C/view?usp=share_link) \| [Log Link](https://drive.google.com/file/d/1cweQarIDB0PWCA3Xt94-_AGItdw6EQ5h/view?usp=share_link) |
+
 ## Tips
 
 We use the `rel_nms` [operation](./maskrcnn_benchmark/data/datasets/evaluation/vg/sgg_eval.py) provided by [RU-Net](https://github.com/siml3/RU-Net/blob/main/maskrcnn_benchmark/data/datasets/evaluation/vg/sgg_eval.py) and [HL-Net](https://github.com/siml3/HL-Net/blob/main/maskrcnn_benchmark/data/datasets/evaluation/vg/sgg_eval.py) in PredCls and SGCls to filter the predicted relation predicates, which encourages diverse prediction results. 
