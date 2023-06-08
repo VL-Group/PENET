@@ -99,14 +99,11 @@ The code is implemented based on [Scene-Graph-Benchmark.pytorch](https://github.
 ## Citation
 
 ```
-@article{zheng2023prototype,
-  title    =  {Prototype-based Embedding Network for Scene Graph Generation},
-  author   =  {Chaofan Zheng, 
-               Xinyu Lyu, 
-               Lianli Gao, 
-               Bo Dai, 
-               and Jingkuan Song},
-  journal  =  {arXiv preprint arXiv:2303.07096},
-  year     =  {2023}
+@inproceedings{zheng2023prototype,
+  title={Prototype-based Embedding Network for Scene Graph Generation},
+  author={Zheng, Chaofan and Lyu, Xinyu and Gao, Lianli and Dai, Bo and Song, Jingkuan},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={22783--22792},
+  year={2023}
 }
 ```
